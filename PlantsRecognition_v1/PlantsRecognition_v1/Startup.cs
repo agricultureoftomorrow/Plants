@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreAI.Interfaces;
 using CoreAI.Models;
+using CoreAI.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -24,6 +26,7 @@ namespace PlantsRecognition_v1
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            services.AddScoped<IPlantsRecognition, PlantsRecognitionRepository>();
             services.AddMvc();
         }
 
