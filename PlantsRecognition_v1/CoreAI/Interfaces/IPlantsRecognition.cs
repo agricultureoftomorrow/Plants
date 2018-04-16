@@ -5,7 +5,7 @@ using CoreAI.Models;
 
 namespace CoreAI.Interfaces
 {
-    public interface IPlantsRecognition
+    public interface IPlantsRecognition 
     {
         CustomeVisionResponse PlantsRecognitionImage();
     }
