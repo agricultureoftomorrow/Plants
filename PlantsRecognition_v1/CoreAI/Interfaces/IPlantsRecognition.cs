@@ -7,6 +7,6 @@ namespace CoreAI.Interfaces
 {
     public interface IPlantsRecognition 
     {
-        CustomeVisionResponse PlantsRecognitionImage();
+        CustomeVisionResponse PlantsRecognitionImage(); 
     }
 }
