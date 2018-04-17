@@ -6,8 +6,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace CoreAI.Interfaces
 {
-    public interface IPlantsRecognition
+    public interface IPlantsRecognition 
     {
+<<<<<<< HEAD
         CustomeVisionResponse PlantsRecognitionImage(string predictionKey, string predictionUrl, IFormFile files);
+=======
+        CustomeVisionResponse PlantsRecognitionImage(); 
+>>>>>>> origin/0.1
     }
 }
