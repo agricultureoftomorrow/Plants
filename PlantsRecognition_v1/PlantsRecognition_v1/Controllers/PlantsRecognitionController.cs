@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CoreAI.Interfaces;
 using CoreAI.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -12,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace PlantsRecognition_v1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/upload")]
     public class PlantsRecognitionController : Controller
     {
         private readonly string trainingKey;
@@ -22,21 +23,28 @@ namespace PlantsRecognition_v1.Controllers
 
         public PlantsRecognitionController(IOptions<ApplicationSettings> appSettings, IPlantsRecognition plantsRecognition )
         {
+
             trainingKey = appSettings.Value.TrainingKey;
             predictionKey = appSettings.Value.PredictionKey;
             predictionURL = appSettings.Value.PredictionUrl;
             plantsRecognitionRepository = plantsRecognition;
         }
 
-        public IActionResult RecognitionImage(ICollection<IFormFile> inputFilesCollection)
+        [HttpPost]
+        public IActionResult RecognitionImage()
         {
-            if (inputFilesCollection==null)
+            var res = Request.Form;
+            var files = res.Files[0];
+
+            if (!Request.HasFormContentType)
             {
-               return BadRequest(); 
+                return BadRequest();
             }
 
-       
-            return Ok();
+            CustomeVisionResponse response = plantsRecognitionRepository.PlantsRecognitionImage(predictionKey, predictionURL,files);
+
+            if (response == null) { return BadRequest();}
+            return Ok(response);
         }
 
     }

@@ -1,0 +1,29 @@
+﻿
+
+<h4>Upload A File And Predict</h4>
+<p-fileUpload name="myfile[]"
+              url="api/upload"
+              multiple="false"
+              accept="image/*"
+              maxFileSize="10000000"
+              uploadLabel="Predict"
+              (onSelect)="onSelect($event)"
+              (onUpload)="onUpload($event)">
+    <!--<ng-template pTemplate type="content">
+        <div *ngIf="predictedImage!=''">
+            <img [src]="predictedImage" [width]="600" />
+
+            <p-dataTable [value]="predictions">
+                <p-column field="tag" header="Tag"></p-column>
+                <p-column field="probability" header="Probability"></p-column>
+            </p-dataTable>
+        </div>
+    </ng-template>-->
+    <ng-template pTemplate="content">
+        
+            <ul *ngIf="predictions">
+                <li *ngFor="let p of predictions">{{p.tag}}: {{p.probability}}%</li>
+            </ul>
+
+    </ng-template>
+</p-fileUpload>

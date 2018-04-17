@@ -9,6 +9,15 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
+import { RecognitionComponent } from './components/recognition/recognition.component';
+
+import {
+    ButtonModule,
+    GrowlModule,
+    FileUploadModule,
+    DataTableModule,
+    SharedModule
+} from 'primeng/primeng';
 
 @NgModule({
     declarations: [
@@ -16,7 +25,8 @@ import { CounterComponent } from './components/counter/counter.component';
         NavMenuComponent,
         CounterComponent,
         FetchDataComponent,
-        HomeComponent
+        HomeComponent,
+        RecognitionComponent
     ],
     imports: [
         CommonModule,
@@ -27,8 +37,14 @@ import { CounterComponent } from './components/counter/counter.component';
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
+            { path: 'recognition', component: RecognitionComponent},
             { path: '**', redirectTo: 'home' }
-        ])
+        ]),
+        ButtonModule,
+        GrowlModule,
+        FileUploadModule,
+        DataTableModule,
+        SharedModule
     ]
 })
 export class AppModuleShared {

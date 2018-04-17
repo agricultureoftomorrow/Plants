@@ -8,6 +8,6 @@ namespace CoreAI.Models
     {
         public string TagId { get; set; }
         public string Tag { get; set; }
-        public string Propability { get; set; }
+        public string Probability { get; set; }
     }
 }

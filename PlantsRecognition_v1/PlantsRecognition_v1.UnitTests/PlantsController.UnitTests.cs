@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using CoreAI.Interfaces;
 using CoreAI.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,7 +25,7 @@ namespace PlantsRecognition_v1.UnitTests
             Project = "Plants",
             Predictions = new List<Prediction>()
                 {
-                    new Prediction() {Tag = "goosefoot", TagId = "2", Propability = "92"}
+                    new Prediction() {Tag = "goosefoot", TagId = "2", Probability = "92"}
                 }
         };
 
@@ -32,41 +34,31 @@ namespace PlantsRecognition_v1.UnitTests
 
         private PlantsRecognitionController ControllerPlants()
         {
+           
             var mockRepository = new Mock<IPlantsRecognition>();
             var mockSettings = new Mock<IOptions<ApplicationSettings>>();
+            var mockCollection = new Mock<IFormFile>();
+
+            var content = "some content";
+            var fileName = "FIleName.jpg";
+            var ms=new MemoryStream();
+            var writer=new StreamWriter(ms);
+            writer.Write(content);
+            writer.Flush();
+            ms.Position = 0;
+            mockCollection.Setup(i => i.OpenReadStream()).Returns(ms);
+            mockCollection.Setup(i => i.FileName).Returns(fileName);
+            mockCollection.Setup(i => i.Length).Returns(ms.Length);
+
             mockSettings.Setup(s => s.Value).Returns(appSettings);
-            mockRepository.Setup(x => x.PlantsRecognitionImage()).Returns(returnList);
+            mockRepository.Setup(x => x.PlantsRecognitionImage("22","http", mockCollection.Object)).Returns(returnList);
+            
+
             return new PlantsRecognitionController(mockSettings.Object, mockRepository.Object);
         }
 
-        [TestMethod]
-        public void RecognitionImage_checkInputFile_BadRequest()
-        {
-            //Arrange           
-            var controller = ControllerPlants();
 
-            //Act
-            var result = controller.RecognitionImage(null);
 
-            //Assert
-            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
-        }
 
-        [TestMethod]
-        public void RecognitionImage_checkResult_CustomeVisionResponse()
-        {
-            //Arrange
-            var mockCollection=new Mock<ICollection<IFormFile>>();
-            var controller = ControllerPlants();
-
-            //Act
-            var result = controller.RecognitionImage(mockCollection.Object);
-            var okObjectResult = result as OkObjectResult;
-            var modelResult = okObjectResult.Value is CustomeVisionResponse;
-
-            //Assert
-            Assert.IsNotNull(modelResult);
-            Assert.IsTrue(modelResult);
-        }
     }
 }
