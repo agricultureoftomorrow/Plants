@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using CoreAI.Interfaces;
 using CoreAI.Models;
+using CoreAI.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -29,33 +30,18 @@ namespace PlantsRecognition_v1.UnitTests
                 }
         };
 
+        private readonly CustomVisionProject returnProjectsList=new CustomVisionProject()
+        {
+            Id = "1",
+            Created = "Tommy Lee Jones",
+            Name = "Food",
+            Description = "Some food list",
+            
+            
+        };
+        
         private readonly ApplicationSettings appSettings = new ApplicationSettings()
         { PredictionUrl = "someUrl", PredictionKey = "somePredictionKey", TrainingKey = "someTrainingKey" };
-
-        private PlantsRecognitionController ControllerPlants()
-        {
-           
-            var mockRepository = new Mock<IPlantsRecognition>();
-            var mockSettings = new Mock<IOptions<ApplicationSettings>>();
-            var mockCollection = new Mock<IFormFile>();
-
-            var content = "some content";
-            var fileName = "FIleName.jpg";
-            var ms=new MemoryStream();
-            var writer=new StreamWriter(ms);
-            writer.Write(content);
-            writer.Flush();
-            ms.Position = 0;
-            mockCollection.Setup(i => i.OpenReadStream()).Returns(ms);
-            mockCollection.Setup(i => i.FileName).Returns(fileName);
-            mockCollection.Setup(i => i.Length).Returns(ms.Length);
-
-            mockSettings.Setup(s => s.Value).Returns(appSettings);
-            mockRepository.Setup(x => x.PlantsRecognitionImage("22","http", mockCollection.Object)).Returns(returnList);
-            
-
-            return new PlantsRecognitionController(mockSettings.Object, mockRepository.Object);
-        }
 
 
 

@@ -43,8 +43,15 @@ namespace PlantsRecognition_v1.Controllers
 
             CustomeVisionResponse response = plantsRecognitionRepository.PlantsRecognitionImage(predictionKey, predictionURL,files);
 
-            if (response == null) { return BadRequest();}
-            return Ok(response);
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
 
     }

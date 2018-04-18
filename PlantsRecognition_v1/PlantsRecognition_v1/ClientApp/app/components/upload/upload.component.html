@@ -1,0 +1,28 @@
+﻿<p-fileUpload name="myfile[]"
+              url="api/training"
+              multiple="true"
+              accept="image/*"
+              maxFileSize="10000000"
+              uploadLabel="Upload New Files"
+              (onBeforeUpload)="onBeforeUploadHandler($event)"
+              (onUpload)="onUpload($event)">
+</p-fileUpload>
+
+<label for="Projects">Projects</label>
+<br />
+<div *ngIf="selectedProject.thumbnailUri!=''" class="ui-g-6 ui-md-2"><img src="{{selectedProject.thumbnailUri}}" width="125" height="125"></div>
+<p-dropdown id="Projects"
+            appendTo="body"
+            [options]="projectsDropDown"
+            [(ngModel)]="selectedProject"
+            [style]="{'width':'250px'}"
+            (onChange)="onProjectChange()"></p-dropdown>
+<br /><br />
+<label for="Tags">Tags</label>
+<br />
+<p-dropdown id="Tags"
+            appendTo="body"
+            [options]="tagsDropDown"
+            [(ngModel)]="selectedTag"
+            [style]="{'width':'250px'}"
+            ></p-dropdown>

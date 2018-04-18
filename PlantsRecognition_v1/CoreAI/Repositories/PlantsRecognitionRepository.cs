@@ -60,5 +60,43 @@ namespace CoreAI.Repositories
             return returnCustomeVisionResponse;
 
         }
+
+        public IList<CustomVisionProject> GetProjectsList(string trainingKey)
+        {
+            var returnProjectsList=new List<CustomVisionProject>();
+
+            using (HttpClient client=new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Training-Key", trainingKey);
+                StringBuilder uri=new StringBuilder();
+                uri.Append("https://southcentralus.api.cognitive.microsoft.com");
+                uri.Append("/customvision/v1.0/Training");
+                uri.Append("/projects?");
+                HttpResponseMessage response = client.GetAsync(uri.ToString()).Result;
+                string content = response.Content.ReadAsStringAsync().Result;
+                returnProjectsList = JsonConvert.DeserializeObject<List<CustomVisionProject>>(content);
+            }
+
+            return returnProjectsList;
+        }
+
+        public CustomVisionTag GetTagsList(string projectId, string trainingKey)
+        {
+            CustomVisionTag returnTags=new CustomVisionTag();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Training-Key", trainingKey);
+                StringBuilder uri=new StringBuilder();
+                uri.Append("https://southcentralus.api.cognitive.microsoft.com");
+                uri.Append("/customvision/v1.0/Training");
+                uri.Append("/projects/" + projectId);
+                uri.Append("/tags?");
+                HttpResponseMessage response = client.GetAsync(uri.ToString()).Result;
+                string content = response.Content.ReadAsStringAsync().Result;
+                returnTags = JsonConvert.DeserializeObject<CustomVisionTag>(content);
+            }
+            return returnTags;
+        }
     }
 }

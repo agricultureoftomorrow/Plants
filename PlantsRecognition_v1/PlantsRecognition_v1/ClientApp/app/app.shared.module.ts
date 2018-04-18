@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -10,13 +11,17 @@ import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { RecognitionComponent } from './components/recognition/recognition.component';
+import {UploadComponent} from './components/upload/upload.component';
 
 import {
     ButtonModule,
     GrowlModule,
     FileUploadModule,
     DataTableModule,
-    SharedModule
+    SharedModule, 
+    SelectItem,
+    DropdownModule,
+    DataListModule
 } from 'primeng/primeng';
 
 @NgModule({
@@ -26,7 +31,8 @@ import {
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        RecognitionComponent
+        RecognitionComponent,
+        UploadComponent
     ],
     imports: [
         CommonModule,
@@ -37,11 +43,14 @@ import {
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: 'recognition', component: RecognitionComponent},
+            { path: 'recognition', component: RecognitionComponent },
+            { path: 'upload', component: UploadComponent },
             { path: '**', redirectTo: 'home' }
         ]),
+        BrowserAnimationsModule,
         ButtonModule,
         GrowlModule,
+        DropdownModule,
         FileUploadModule,
         DataTableModule,
         SharedModule

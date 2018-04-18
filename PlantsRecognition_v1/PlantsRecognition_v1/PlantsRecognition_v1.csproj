@@ -23,9 +23,13 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\components\recognition\recognition.component.ts" />
+    <None Remove="ClientApp\app\components\upload\upload.component.ts" />
     <None Remove="ClientApp\app\components\_interfaces\IPrediction.ts" />
+    <None Remove="ClientApp\app\components\_interfaces\IProjectCustomVision.ts" />
+    <None Remove="ClientApp\app\components\_interfaces\ITagCustomVision.ts" />
     <None Remove="ClientApp\app\components\_interfaces\IVisionResponse.ts" />
     <None Remove="ClientApp\app\components\_services\recognition.service.ts" />
+    <None Remove="ClientApp\app\components\_services\upload.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,9 +76,13 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\components\recognition\recognition.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\upload\upload.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\_interfaces\IPrediction.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\_interfaces\IProjectCustomVision.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\_interfaces\ITagCustomVision.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\_interfaces\IVisionResponse.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\_services\recognition.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\_services\upload.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
