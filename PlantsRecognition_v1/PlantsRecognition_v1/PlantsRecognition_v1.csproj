@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\components\recognition\recognition.component.ts" />
+    <None Remove="ClientApp\app\components\training\training.component.ts" />
     <None Remove="ClientApp\app\components\upload\upload.component.ts" />
     <None Remove="ClientApp\app\components\_interfaces\IPrediction.ts" />
     <None Remove="ClientApp\app\components\_interfaces\IProjectCustomVision.ts" />
@@ -76,6 +77,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\components\recognition\recognition.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\training\training.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\upload\upload.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\_interfaces\IPrediction.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\_interfaces\IProjectCustomVision.ts" />

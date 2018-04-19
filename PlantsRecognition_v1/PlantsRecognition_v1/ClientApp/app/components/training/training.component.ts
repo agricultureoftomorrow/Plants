@@ -11,13 +11,13 @@ import { ICustomeVisionProject, IProject } from '../_interfaces/IProjectCustomVi
 import { ICustomVisionTag, ITag } from '../_interfaces/ITagCustomVision';
 
 @Component({
-    selector: "upload",
-    templateUrl: "upload.component.html",
+    selector: "training",
+    templateUrl: "training.component.html",
     providers:[UploadService]
     
 })
 
-export class UploadComponent implements OnInit {
+export class TrainingComponent implements OnInit {
    
 
     constructor(private _service:UploadService) {}

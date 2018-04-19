@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace PlantsRecognition_v1.Controllers
 {
-    [Route("api/upload")]
+    [Route("api/recognition")]
     public class PlantsRecognitionController : Controller
     {
         private readonly string trainingKey;

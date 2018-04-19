@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoreAI.Interfaces;
 using CoreAI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -11,7 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace PlantsRecognition_v1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/upload")]
     public class UploadController : Controller
     {
         private readonly string trainingKey;
@@ -39,6 +40,17 @@ namespace PlantsRecognition_v1.Controllers
         {
             var result = plantsRecognitionRepository.GetProjectsList(trainingKey);
             return Ok(result);
+        }
+
+        [HttpPost]
+        public IActionResult UploadNewImages()
+        {
+            var response = Request.Form;
+            IFormFileCollection files = response.Files;
+            string project = response["selectedProject"].First();
+            string tag = response["selectedTag"].First();
+            plantsRecognitionRepository.SendNewImagesCollection(files, project, tag, trainingKey);
+            return Ok();
         }
 
     }

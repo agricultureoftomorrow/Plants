@@ -22,6 +22,7 @@ namespace CoreAI.Repositories
         {
             
             var form = files;
+            
             CustomeVisionResponse returnCustomeVisionResponse=new CustomeVisionResponse();
 
             using (var readStream = form.OpenReadStream())
@@ -97,6 +98,42 @@ namespace CoreAI.Repositories
                 returnTags = JsonConvert.DeserializeObject<CustomVisionTag>(content);
             }
             return returnTags;
+        }
+
+        public void SendNewImagesCollection(IFormFileCollection files, string project, string tag, string trainingKey)
+        {
+            var form = files;
+            
+            if (project != null && tag != null)
+            {
+                foreach (var file in form)
+                {
+                    using (var reader = file.OpenReadStream())
+                    {
+                        using (HttpClient client = new HttpClient())
+                        {
+                            client.DefaultRequestHeaders.Add("Training-Key", trainingKey);
+                            MultipartFormDataContent multipartFormDataContent=new MultipartFormDataContent();
+                            StreamContent streamContent=new StreamContent(reader);
+                            streamContent.Headers.ContentType=new MediaTypeHeaderValue("application/octet-stream");
+                            ContentDispositionHeaderValue contentDispositionHeaderValue=new ContentDispositionHeaderValue("form-data");
+                            contentDispositionHeaderValue.Name = "imageData";
+                            contentDispositionHeaderValue.FileName = file.FileName;
+                            streamContent.Headers.ContentDisposition = contentDispositionHeaderValue;
+                            multipartFormDataContent.Add(streamContent, "imageData");
+                            StringBuilder uri=new StringBuilder();
+                            uri.Append("https://southcentralus.api.cognitive.microsoft.com");
+                            uri.Append("/customvision/v1.0/Training");
+                            uri.Append("/projects/" + project);
+                            uri.Append("/images/image?");
+                            uri.Append("tagIds=" + tag);
+                            HttpResponseMessage response = client.PostAsync(uri.ToString(), multipartFormDataContent).Result;
+                            string content = response.Content.ReadAsStringAsync().Result;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
